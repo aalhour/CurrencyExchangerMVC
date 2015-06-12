@@ -1,6 +1,6 @@
 # Currency Exchanger
 
-An interview assignment project.
+This is an interview assignment project. It was completed in a total of 18 hours of work.
 
 ### Description:
 
