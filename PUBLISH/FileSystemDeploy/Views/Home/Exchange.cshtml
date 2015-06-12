@@ -1,0 +1,124 @@
+﻿@{
+    ViewBag.Title = "Exchange";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="validation-error" class="alert alert-danger hidden" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    <span id="error-message"></span>
+</div>
+
+<br />
+
+
+@* BEGINING OF FORM *@
+@using (Html.BeginForm("Index", "Exchange", FormMethod.Get, new { @class = "form-inline" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="well">
+        <div class="form-group">
+            <label for="SourceCurrency">From:&nbsp;</label>
+            <select id="SourceCurrency" name="SourceCurrency" placeholder="Source Currency" class="form-control" width="50">
+                @foreach (var item in ViewBag.Currencies)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+
+        &nbsp;
+
+        <div class="form-group">
+            <label for="DestinationCurrency">To:&nbsp;</label>
+            <select id="DestinationCurrency" name="DestinationCurrency" placeholder="Destination Currency" class="form-control" width="50">
+                @foreach (var item in ViewBag.Currencies)
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+
+        &nbsp;
+
+        <div class="form-group">
+            <div class="input-group" class="success">
+                <div class="input-group-addon">Amount</div>
+                <input type="number" class="form-control"
+                       id="ExchangeAmount"
+                       name="ExchangeAmount"
+                       placeholder="Enter a number"
+                       value="1.0"
+                       required
+                       aria-required="true"
+                       aria-invalid="true"
+                       data-rule-required="true"
+                       class="error" />
+            </div>
+        </div>
+
+        &nbsp;
+
+        <input type="submit" class="btn btn-primary pull-right" value="Calculate" id="btnGetUSDRate" name="btnGetUSDRate" />
+
+        <input type="hidden" id="ExchangeUtilityAPIHiddenField" value="@ViewBag.ExchangeUtilityAPI" />
+    </div>
+}
+@* END OF FORM *@
+
+
+<div id="ExchangeRateResultsContainer" class="hidden">
+    <!-- Exchange Result container -->
+    <h4 class="bg-info" style="padding: 15px;" id="CalculatedExchangeRate">Currency Exchange&nbsp;&#61;&nbsp;<span>&nbsp;</span></h4>
+
+    <br />
+    <hr />
+    <br />
+
+    <!-- HISTOGRAM -->
+    <div class="panel panel-success">
+        <div class="panel-heading">History of <span id="historyFromCurrency"></span>-to-<span id="historyToCurrency"></span> Currency Exchange:</div>
+
+        <div class="panel panel-body">
+            <div id="chart_container">
+                <div id="chart"></div>
+                <div id="legend_container">
+                    <div id="smoother" title="Smoothing"></div>
+                    <div id="legend"></div>
+                </div>
+                <div id="slider"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.row -->
+@section Styles {
+    @Styles.Render("~/Content/rickshawcss")
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/rickshaw")
+
+    <!-- THIS IS THE JS FILE THAT HAS ALL THE FUNCTIONALITIES FOR THIS PAGE -->
+    <script type="text/javascript" src="~/Scripts/home_exchange_js_functions.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#exchange-tab').addClass("active");
+
+            $('#MainForm').validate();
+
+            $('#btnGetUSDRate').click(function (e) {
+                e.preventDefault();
+
+                if (validateForm() == true) {
+                    makeExchangeRateRequest();
+                }//end-if
+            });
+        });
+    </script>
+}

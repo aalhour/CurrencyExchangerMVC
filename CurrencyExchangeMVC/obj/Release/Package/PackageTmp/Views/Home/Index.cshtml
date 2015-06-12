@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Home";
+}
+
+<div class="jumbotron">
+    <h1>Currency Exchanger</h1>
+
+    <p>This is a currency exchange application, all data is fetched from the <a href="http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml">European Central Bank Web-Service</a>. The data is cached internally without relying on any database. The internal cache handles new updates published at the web-service end.</p>
+
+    <br />
+
+    @Html.ActionLink("Go to the Exchange Utility >", "Exchange", "Home", new { @class = "btn btn-lg btn-primary" })
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#home-tab').addClass("active");
+        });
+    </script>
+}
