@@ -4,7 +4,7 @@ An interview assignment project.
 
 ### Description:
 
-This is an MVC application that reads *Curreny Reference-Rates* from the **ECB** (European Central Bank), stores it in an in-memory Data Structure and serves it to the front-end.
+This is an MVC application that reads *Curreny Reference-Rates* from the **ECB** (European Central Bank) [Web-Service](http://www.ecb.europa.eu/stats/eurofxref/eurofxref-hist-90d.xml), stores it in an in-memory Data Structure and serves it to the front-end.
 
 The project consists of two controllers: Home, and Exchange. The Home controller represent the front-end which consists of three pages: Home page, Exchange utility page, and About page. The actual service is in the Exchange utility page.
 
@@ -20,7 +20,7 @@ data = {
 // a sample from the data-history
 data["History"] = [
   0: Object {
-      Date: "2015",
+      Date: "2015-06-12",
       EpochDate: 141234123123123
       FromCurrencyName: "USD",
       FromCurrencyRate: 1.1232,
